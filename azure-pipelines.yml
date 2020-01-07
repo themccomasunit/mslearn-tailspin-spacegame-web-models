@@ -36,9 +36,11 @@ steps:
     patchVersion: '0'
  
 - task: NuGetCommand@2
-  displayName: 'Publish NuGet package'
-  inputs:
-    command: push
-    publishVstsFeed: 'mccomas-az400/Tailspin.SpaceGame.Web.Models'
-    allowPackageConflicts: true
-  condition: succeeded()
+      displayName: 'Publish NuGet package'
+      inputs:
+        command: push
+        feedsToUse: 'select'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'mccomas-az400/Tailspin.SpaceGame.Web.Models'
+        allowPackageConflicts: true
